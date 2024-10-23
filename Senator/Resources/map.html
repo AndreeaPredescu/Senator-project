@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Map</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=API_KEY"></script>
+    <script>
+        var map;
+        var markers = []; 
+
+        function initMap() {
+            var center = { lat: 46.0, lng: 25.0 }; 
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 6,
+                center: center
+            });
+        }
+
+        function updateSoldiersPositions(soldiers) {
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
+
+            soldiers.forEach(function (soldier) {
+                var marker = new google.maps.Marker({
+                    position: { lat: soldier.Latitude, lng: soldier.Longitude },
+                    map: map,
+                    title: soldier.Name
+                });
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: `
+                            <div>
+                                <h3>${soldier.Name}</h3>
+                                <p><b>Latitudine:</b> ${soldier.Latitude}</p>
+                                <p><b>Longitudine:</b> ${soldier.Longitude}</p>
+                                <p><b>Țara:</b> ${soldier.Country}</p>
+                                <p><b>Rang:</b> ${soldier.Rank}</p>
+                                <p><b>Training:</b> ${soldier.Training}</p>
+                            </div>
+                        `
+                });
+
+                marker.addListener('click', function () {
+                    infoWindow.open(map, marker);
+                });
+
+                markers.push(marker);
+            });
+        }
+    </script>
+</head>
+<body onload="initMap()">
+    <div id="map" style="width:100%; height:500px;"></div>
+</body>
+</html>

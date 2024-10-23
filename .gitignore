@@ -396,3 +396,14 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+.vs/
+bin/
+obj/
+*.user
+*.suo
+packages/
+*.nupkg
+*.mdf
+*.ldf
+App_Data/
